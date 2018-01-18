@@ -21,7 +21,7 @@ public class Dictionary implements ITrie{
         else{
             char start = remains.charAt(0);
             remains = remains.substring(1);
-            if(place.nodes[start - 'a'] == NULL){
+            if(place.nodes[start - 'a'] == null){
                 place.nodes[start - 'a'] = new Node();
                 nodeCount++;
             }
@@ -29,13 +29,13 @@ public class Dictionary implements ITrie{
         }
     }
 
-    public Node find(string word){
+    public Node find(String word){
         word = word.toLowerCase();
-        return add(root, word);
+        return find(root, word);
     }
     private Node find(Node place, String remains){
-        if(place == NULL){
-            return NULL;
+        if(place == null){
+            return null;
         }
         else if("".equals(remains)){
             return place;
@@ -65,7 +65,7 @@ public class Dictionary implements ITrie{
     }
 	@Override
 	public boolean equals(Object o) {
-        if(o == NULL){
+        if(o == null){
             return false;
         }
         return this.hashCode() == o.hashCode();

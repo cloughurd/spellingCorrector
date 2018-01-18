@@ -1,6 +1,6 @@
-#package spell;
+package spell;
 
-public class Node implements INode{
+public class Node implements ITrie.INode{
 
     public Node[] nodes = new Node[26];
     private int count = 0;

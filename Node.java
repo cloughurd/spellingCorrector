@@ -2,7 +2,8 @@ package spell;
 
 public class Node implements ITrie.INode{
 
-    public Node[] nodes = new Node[26];
+    public final int ALPHABET_SIZE = 26;
+    public Node[] nodes = new Node[ALPHABET_SIZE];
     private int count = 0;
 
     public int getValue(){

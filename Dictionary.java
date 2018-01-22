@@ -1,11 +1,47 @@
 package spell;
 
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+
 public class Dictionary implements ITrie{
 
     private Node root = new Node();
     private int uniqueWordCount = 0;
     private int wordCount = 0;
     private int nodeCount = 0;
+
+    public static void main(String[] args){
+        String inputFilename = args[0];
+        Dictionary testDictionary = new Dictionary();
+        Scanner sc;
+        File inputFile;
+
+        try{
+            inputFile = new File(inputFilename);
+            sc = new Scanner(inputFile);
+        }
+        catch (FileNotFoundException fnfe){
+            System.out.println("Invalid Filename");
+            return;
+        }
+
+        while(sc.hasNext()){
+            String next = sc.next();
+            boolean isValid = true;
+            char[] nextAsChar = next.toCharArray();
+            for(char c : nextAsChar){
+                if(c < 'A' || c > 'z' || (c > 'Z' && c < 'a')){
+                    isValid = false;
+                }
+            }
+            if(isValid){
+                testDictionary.add(next);
+            }
+        }
+
+        System.out.println(testDictionary.toString());
+    }
 
     public void add(String word){
         word = word.toLowerCase();
@@ -57,8 +93,23 @@ public class Dictionary implements ITrie{
 
 	@Override
 	public String toString() {
-        return "toString()";
+        return toString(root, "");
     }
+    public String toString(Node place, String word){
+        String result = "";
+        if(place == null){
+            return "";
+        }else{
+            if(place.getValue() > 0){
+                result = result + word + "\n";
+            }
+            for(int i = 0; i < place.ALPHABET_SIZE; i++){
+                result = result + toString(place.nodes[i], word + Character.toString((char) (i + 'a')));
+            }
+            return result;
+        }
+    }
+
 	@Override
 	public int hashCode() {
         return (nodeCount * wordCount) % uniqueWordCount;
@@ -68,7 +119,13 @@ public class Dictionary implements ITrie{
         if(o == null){
             return false;
         }
-        return this.hashCode() == o.hashCode();
+        else if(this.hashCode() != o.hashCode()){
+            return false;
+        }
+        else if(this.toString() == o.toString()){
+            return true;
+        }
+        else return false;
     }
 
 }

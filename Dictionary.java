@@ -74,6 +74,9 @@ public class Dictionary implements ITrie{
             return null;
         }
         else if("".equals(remains)){
+            if(place.getValue() == 0){
+                return null;
+            }
             return place;
         }
         else{

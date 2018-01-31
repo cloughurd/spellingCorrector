@@ -1,15 +1,17 @@
 package spell;
 
 import java.util.Scanner;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 
 public class Dictionary implements ITrie{
 
-    private Node root = new Node();
+    public Node root = new Node();
     private int uniqueWordCount = 0;
     private int wordCount = 0;
-    private int nodeCount = 0;
+    private int nodeCount = 1;
+    private boolean equalChecker = true;
 
     public static void main(String[] args){
         String inputFilename = args[0];
@@ -125,10 +127,24 @@ public class Dictionary implements ITrie{
         else if(this.hashCode() != o.hashCode()){
             return false;
         }
-        else if(this.toString() == o.toString()){
+        else return equals(this.root, ((Dictionary)o).root);
+    }
+
+    private boolean equals(Node thisPlace, Node oPlace){
+        if((thisPlace == null && oPlace != null) || (thisPlace != null && oPlace == null)){
+            return false;
+        }
+        if(thisPlace == null && oPlace == null){
             return true;
         }
-        else return false;
+        if(thisPlace.getValue() != oPlace.getValue()){
+            return false;
+        }
+        boolean result = true;
+        for(int i = 0; i < 26; i++){
+            result = result && equals(thisPlace.nodes[i], oPlace.nodes[i]);
+        }
+        return result;
     }
 
 }
